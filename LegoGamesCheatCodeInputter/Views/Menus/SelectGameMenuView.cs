@@ -4,17 +4,19 @@ namespace LegoGamesCheatCodeInputter.Views.Menus
 {
     public sealed class SelectGameMenuView : AbstractMenu
     {
-        public IGame Render(IGame[] games)
+        public IGame? Render(IGame[] games)
         {
+            ArgumentNullException.ThrowIfNull(games);
+            if (games.Length == 0)
+                throw new InvalidOperationException("No games are registered.");
+
             int selectedIndex = 0;
 
-            string[] GameTitles = games.Select(game => game.Title).ToArray();
+            string[] gameTitles = games.Select(game => game.Title).ToArray();
 
             while (true)
             {
-                Console.Clear();
-
-                RenderMenu(GameTitles, selectedIndex);
+                RenderMenu(gameTitles, selectedIndex);
 
                 var key = Console.ReadKey(true);
 
@@ -30,6 +32,9 @@ namespace LegoGamesCheatCodeInputter.Views.Menus
 
                     case ConsoleKey.Enter:
                         return games[selectedIndex];
+
+                    case ConsoleKey.Escape:
+                        return null;
                 }
 
                 selectedIndex = Math.Clamp(selectedIndex, 0, games.Length - 1);

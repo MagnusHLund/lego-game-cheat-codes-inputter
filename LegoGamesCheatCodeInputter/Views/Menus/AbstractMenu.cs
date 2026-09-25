@@ -6,24 +6,31 @@ namespace LegoGamesCheatCodeInputter.Views.Menus
         {
             Console.Clear();
 
-            Console.WriteLine("╔══════════════════════════════════════════╗");
-            Console.WriteLine("║          LEGO CHEAT CODE INPUTTER        ║");
-            Console.WriteLine("╠══════════════════════════════════════════╣");
-            Console.WriteLine("║                                          ║");
-            Console.WriteLine("║  Select a game:                          ║");
-            Console.WriteLine("║                                          ║");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("  LEGO  /  CHEAT CODE INPUTTER");
+            Console.ResetColor();
+            Console.WriteLine("  ─────────────────────────────────────────────────────────────────");
+            Console.WriteLine();
+            Console.WriteLine("  SELECT A GAME");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("  Choose the game currently open on your screen.");
+            Console.ResetColor();
+            Console.WriteLine();
 
             for (int i = 0; i < menuItems.Length; i++)
             {
-                string prefix = i == selectedIndex ? "> " : "  ";
-
-                Console.WriteLine($"║  {prefix}{menuItems[i]}");
+                bool selected = i == selectedIndex;
+                Console.Write(selected ? "  ❯ " : "    ");
+                if (selected)
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine(menuItems[i]);
+                Console.ResetColor();
             }
 
-            Console.WriteLine("║                                          ║");
-            Console.WriteLine("║       ↑ ↓ Navigate   ENTER Select        ║");
-            Console.WriteLine("║                                          ║");
-            Console.WriteLine("╚══════════════════════════════════════════╝");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("  ↑ / ↓ Move     Enter Select     Esc Exit");
+            Console.ResetColor();
         }
     }
 }

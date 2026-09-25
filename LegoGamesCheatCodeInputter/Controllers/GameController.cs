@@ -1,3 +1,4 @@
+using LegoGamesCheatCodeInputter.Configuration;
 using LegoGamesCheatCodeInputter.Models;
 using LegoGamesCheatCodeInputter.Models.Games;
 using LegoGamesCheatCodeInputter.Views;
@@ -12,9 +13,14 @@ namespace LegoGamesCheatCodeInputter.Controllers
         private readonly CompletedView _completedView;
         private readonly StartingWorkView _startingWorkView;
         private readonly SelectGameMenuView _selectGameMenuView;
+        private readonly ProgressView _progressView;
+        private readonly ErrorView _errorView;
 
-        public GameController()
+        private readonly AppSettings _settings;
+
+        public GameController(AppSettings settings)
         {
+            _settings = settings;
             // Controllers
             _inputController = new InputController();
 
@@ -22,17 +28,32 @@ namespace LegoGamesCheatCodeInputter.Controllers
             _completedView = new CompletedView();
             _startingWorkView = new StartingWorkView();
             _selectGameMenuView = new SelectGameMenuView();
+            _progressView = new ProgressView();
+            _errorView = new ErrorView();
         }
 
         public async Task Main()
         {
             IGame[] games = GetGames();
-            IGame selectedGame = _selectGameMenuView.Render(games);
+            IGame? selectedGame = _selectGameMenuView.Render(games);
+            if (selectedGame is null)
+                return;
 
-            await _startingWorkView.Render(selectedGame.Title);
+            await _startingWorkView.Render(
+                selectedGame.Title,
+                selectedGame.Codes.Count,
+                _settings.FocusCountdownSeconds
+            );
 
-            _inputController.InputCheatCodes(selectedGame.Codes);
-            _completedView.Render();
+            try
+            {
+                await _inputController.InputCheatCodes(selectedGame.Codes, _progressView.Render);
+                _completedView.Render();
+            }
+            catch (Exception exception)
+            {
+                _errorView.Render(exception);
+            }
         }
 
         private IGame[] GetGames()

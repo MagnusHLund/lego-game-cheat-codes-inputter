@@ -1,4 +1,5 @@
 ﻿using LegoGamesCheatCodeInputter.Controllers;
+using LegoGamesCheatCodeInputter.Configuration;
 
 namespace LegoGamesCheatCodeInputter
 {
@@ -6,7 +7,8 @@ namespace LegoGamesCheatCodeInputter
     {
         static async Task Main()
         {
-            await new GameController().Main();
+            AppSettings settings = AppSettings.Load();
+            await new GameController(settings).Main();
         }
     }
 }
