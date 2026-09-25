@@ -4,7 +4,8 @@ namespace LegoGamesCheatCodeInputter.Views.Menus
     {
         private protected void RenderMenu(string[] menuItems, int selectedIndex)
         {
-            Console.Clear();
+            if (!Console.IsOutputRedirected)
+                Console.Clear();
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("  LEGO  /  CHEAT CODE INPUTTER");

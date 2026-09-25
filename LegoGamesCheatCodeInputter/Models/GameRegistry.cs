@@ -1,4 +1,5 @@
 using LegoGamesCheatCodeInputter.Models.Games;
+using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Models
 {

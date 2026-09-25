@@ -1,0 +1,45 @@
+name: LEGO Cheat Code Inputter CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'LegoGamesCheatCodeInputter/**'
+      - 'LegoGamesCheatCodeInputter.Tests/**'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'LegoGamesCheatCodeInputter/**'
+      - 'LegoGamesCheatCodeInputter.Tests/**'
+      - '.github/workflows/ci.yml'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore dependencies
+        run: dotnet restore LegoGamesCheatCodeInputter.Tests/LegoGamesCheatCodeInputter.Tests.csproj
+
+      - name: Build application
+        run: dotnet build LegoGamesCheatCodeInputter/LegoGamesCheatCodeInputter.csproj --configuration Release --no-restore
+
+      - name: Run tests
+        run: dotnet test LegoGamesCheatCodeInputter.Tests/LegoGamesCheatCodeInputter.Tests.csproj --configuration Release --no-restore --logger "trx;LogFileName=test-results.trx"

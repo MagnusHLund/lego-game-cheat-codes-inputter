@@ -1,4 +1,4 @@
-namespace LegoGamesCheatCodeInputter.Controllers
+namespace LegoGamesCheatCodeInputter.Controllers.Interfaces
 {
     public enum InputKey
     {

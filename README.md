@@ -16,3 +16,11 @@ Adjust the delays in `LegoGamesCheatCodeInputter/appsettings.json`. Lower millis
 - `CharacterSelectionDelayMilliseconds`: pause after selecting a character and before advancing to the next position.
 - `CodeSubmitDelayMilliseconds`: pause after submitting each code.
 - `FocusCountdownSeconds`: time to focus the game before input starts (0–60 seconds).
+
+## Run tests
+
+Run the automated tests with:
+
+```sh
+dotnet test LegoGamesCheatCodeInputter.Tests/LegoGamesCheatCodeInputter.Tests.csproj
+```

@@ -1,8 +1,9 @@
 using LegoGamesCheatCodeInputter.Models;
+using LegoGamesCheatCodeInputter.Views.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Views
 {
-    public sealed class ProgressView
+    public sealed class ProgressView : IProgressView
     {
         public void Render(int completedCount, int totalCount, CheatCode completedCode)
         {

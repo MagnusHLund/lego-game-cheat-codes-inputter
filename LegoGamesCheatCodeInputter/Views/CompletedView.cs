@@ -1,6 +1,8 @@
+using LegoGamesCheatCodeInputter.Views.Interfaces;
+
 namespace LegoGamesCheatCodeInputter.Views
 {
-    public sealed class CompletedView
+    public sealed class CompletedView : ICompletedView
     {
         public void Render()
         {

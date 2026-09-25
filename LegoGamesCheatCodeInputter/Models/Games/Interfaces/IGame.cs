@@ -1,4 +1,4 @@
-namespace LegoGamesCheatCodeInputter.Models.Games
+namespace LegoGamesCheatCodeInputter.Models.Games.Interfaces
 {
     public interface IGame
     {

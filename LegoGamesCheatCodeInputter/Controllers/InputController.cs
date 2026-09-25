@@ -1,28 +1,29 @@
 using LegoGamesCheatCodeInputter.Configuration;
+using LegoGamesCheatCodeInputter.Controllers.Interfaces;
 using LegoGamesCheatCodeInputter.Models;
 
 namespace LegoGamesCheatCodeInputter.Controllers
 {
-    public sealed class InputController
+    public sealed class InputController : IInputController
     {
         private const string Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
         private readonly Func<IKeyboardInput> _keyboardInputFactory;
         private readonly InputSettingsOptions _inputSettings;
+        private readonly Func<TimeSpan, Task> _delay;
 
         public InputController()
-            : this(() => new SharpHookKeyboardInput()) { }
+            : this(new InputSettingsOptions()) { }
 
-        public InputController(Func<IKeyboardInput> keyboardInputFactory)
+        public InputController(
+            InputSettingsOptions? inputSettings = null,
+            Func<IKeyboardInput>? keyboardInputFactory = null,
+            Func<TimeSpan, Task>? delay = null
+        )
         {
-            _keyboardInputFactory =
-                keyboardInputFactory
-                ?? throw new ArgumentNullException(nameof(keyboardInputFactory));
-
-            _inputSettings =
-                new InputSettingsOptions()
-                ?? throw new ArgumentNullException(nameof(_inputSettings));
-            ;
+            _keyboardInputFactory = keyboardInputFactory ?? (() => new SharpHookKeyboardInput());
+            _inputSettings = inputSettings ?? new InputSettingsOptions();
+            _delay = delay ?? Task.Delay;
         }
 
         public async Task InputCheatCodes(
@@ -32,6 +33,8 @@ namespace LegoGamesCheatCodeInputter.Controllers
         {
             ArgumentNullException.ThrowIfNull(cheatCodes);
             ValidateCodes(cheatCodes);
+            if (cheatCodes.Count == 0)
+                return;
 
             using IKeyboardInput keyboard = _keyboardInputFactory();
             for (int codeIndex = 0; codeIndex < cheatCodes.Count; codeIndex++)
@@ -52,12 +55,12 @@ namespace LegoGamesCheatCodeInputter.Controllers
                         await PressKey(keyboard, direction);
                     }
 
-                    await Task.Delay(_inputSettings.CharacterSelectionDelayMilliseconds);
+                    await Delay(_inputSettings.CharacterSelectionDelayMilliseconds);
                     await PressKey(keyboard, InputKey.Right);
                 }
 
                 await PressKey(keyboard, InputKey.Enter);
-                await Task.Delay(_inputSettings.CodeSubmitDelayMilliseconds);
+                await Delay(_inputSettings.CodeSubmitDelayMilliseconds);
                 onCodeCompleted?.Invoke(codeIndex + 1, cheatCodes.Count, cheatCode);
             }
         }
@@ -89,7 +92,9 @@ namespace LegoGamesCheatCodeInputter.Controllers
         private async Task PressKey(IKeyboardInput keyboard, InputKey key)
         {
             keyboard.Press(key);
-            await Task.Delay(_inputSettings.KeyEventDelayMilliseconds);
+            await Delay(_inputSettings.KeyEventDelayMilliseconds);
         }
+
+        private Task Delay(int milliseconds) => _delay(TimeSpan.FromMilliseconds(milliseconds));
     }
 }

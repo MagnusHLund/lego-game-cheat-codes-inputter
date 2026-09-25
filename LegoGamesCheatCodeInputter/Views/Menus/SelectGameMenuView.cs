@@ -1,9 +1,17 @@
-using LegoGamesCheatCodeInputter.Models.Games;
+using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
+using LegoGamesCheatCodeInputter.Views.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Views.Menus
 {
-    public sealed class SelectGameMenuView : AbstractMenu
+    public sealed class SelectGameMenuView : AbstractMenu, IGameSelectionView
     {
+        private readonly Func<ConsoleKeyInfo> _readKey;
+
+        public SelectGameMenuView(Func<ConsoleKeyInfo>? readKey = null)
+        {
+            _readKey = readKey ?? (() => Console.ReadKey(true));
+        }
+
         public IGame? Render(IGame[] games)
         {
             ArgumentNullException.ThrowIfNull(games);
@@ -18,7 +26,7 @@ namespace LegoGamesCheatCodeInputter.Views.Menus
             {
                 RenderMenu(gameTitles, selectedIndex);
 
-                var key = Console.ReadKey(true);
+                var key = _readKey();
 
                 switch (key.Key)
                 {

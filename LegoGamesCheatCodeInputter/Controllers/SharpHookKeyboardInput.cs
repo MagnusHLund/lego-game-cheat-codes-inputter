@@ -1,3 +1,4 @@
+using LegoGamesCheatCodeInputter.Controllers.Interfaces;
 using SharpHook;
 using SharpHook.Data;
 using SharpHook.Simulation;

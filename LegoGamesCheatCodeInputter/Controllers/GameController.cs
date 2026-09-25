@@ -1,35 +1,48 @@
 using LegoGamesCheatCodeInputter.Configuration;
+using LegoGamesCheatCodeInputter.Controllers.Interfaces;
 using LegoGamesCheatCodeInputter.Models;
-using LegoGamesCheatCodeInputter.Models.Games;
+using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
 using LegoGamesCheatCodeInputter.Views;
+using LegoGamesCheatCodeInputter.Views.Interfaces;
 using LegoGamesCheatCodeInputter.Views.Menus;
 
 namespace LegoGamesCheatCodeInputter.Controllers
 {
     public sealed class GameController
     {
-        private readonly InputController _inputController;
+        private readonly IInputController _inputController;
 
-        private readonly CompletedView _completedView;
-        private readonly StartingWorkView _startingWorkView;
-        private readonly SelectGameMenuView _selectGameMenuView;
-        private readonly ProgressView _progressView;
-        private readonly ErrorView _errorView;
+        private readonly ICompletedView _completedView;
+        private readonly IStartingWorkView _startingWorkView;
+        private readonly IGameSelectionView _selectGameMenuView;
+        private readonly IProgressView _progressView;
+        private readonly IErrorView _errorView;
 
         private readonly AppSettings _settings;
+        private readonly IReadOnlyList<IGame> _games;
 
-        public GameController(AppSettings settings)
+        public GameController(
+            AppSettings settings,
+            IReadOnlyList<IGame>? games = null,
+            IInputController? inputController = null,
+            IGameSelectionView? gameSelectionView = null,
+            IStartingWorkView? startingWorkView = null,
+            ICompletedView? completedView = null,
+            IProgressView? progressView = null,
+            IErrorView? errorView = null
+        )
         {
-            _settings = settings;
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            _games = games ?? GameRegistry.Games;
             // Controllers
-            _inputController = new InputController();
+            _inputController = inputController ?? new InputController(settings.Input);
 
             // Views
-            _completedView = new CompletedView();
-            _startingWorkView = new StartingWorkView();
-            _selectGameMenuView = new SelectGameMenuView();
-            _progressView = new ProgressView();
-            _errorView = new ErrorView();
+            _completedView = completedView ?? new CompletedView();
+            _startingWorkView = startingWorkView ?? new StartingWorkView();
+            _selectGameMenuView = gameSelectionView ?? new SelectGameMenuView();
+            _progressView = progressView ?? new ProgressView();
+            _errorView = errorView ?? new ErrorView();
         }
 
         public async Task Main()
@@ -58,7 +71,7 @@ namespace LegoGamesCheatCodeInputter.Controllers
 
         private IGame[] GetGames()
         {
-            return GameRegistry.Games.OrderBy(g => g.Title).ToArray();
+            return _games.OrderBy(g => g.Title).ToArray();
         }
     }
 }

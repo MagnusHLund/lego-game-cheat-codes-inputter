@@ -1,3 +1,5 @@
+using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
+
 namespace LegoGamesCheatCodeInputter.Models.Games
 {
     public class LegoHarryPotterYears5To7 : IGame

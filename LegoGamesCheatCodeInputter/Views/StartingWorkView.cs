@@ -1,7 +1,18 @@
+using LegoGamesCheatCodeInputter.Views.Interfaces;
+
 namespace LegoGamesCheatCodeInputter.Views
 {
-    public sealed class StartingWorkView
+    public sealed class StartingWorkView : IStartingWorkView
     {
+        private readonly Func<string?> _readLine;
+        private readonly Func<TimeSpan, Task> _delay;
+
+        public StartingWorkView(Func<string?>? readLine = null, Func<TimeSpan, Task>? delay = null)
+        {
+            _readLine = readLine ?? Console.ReadLine;
+            _delay = delay ?? Task.Delay;
+        }
+
         public async Task Render(string gameTitle, int codeCount, int countdownSeconds)
         {
             Console.Clear();
@@ -26,20 +37,18 @@ namespace LegoGamesCheatCodeInputter.Views
             Console.ResetColor();
             Console.WriteLine();
 
-            Console.WriteLine("Press enter to start the 5 second countdown");
-            Console.ReadLine();
+            Console.WriteLine($"Press enter to start the {countdownSeconds} second countdown");
+            _readLine();
             Console.WriteLine("  Starting in:");
 
             for (int seconds = countdownSeconds; seconds > 0; seconds--)
             {
-                Console.SetCursorPosition(2, Console.CursorTop);
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write($"{seconds}   ");
+                Console.WriteLine($"  {seconds}");
                 Console.ResetColor();
-                await Task.Delay(1000);
+                await _delay(TimeSpan.FromSeconds(1));
             }
 
-            Console.SetCursorPosition(2, Console.CursorTop);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("GO!  ");
             Console.ResetColor();

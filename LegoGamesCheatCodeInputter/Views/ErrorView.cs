@@ -1,6 +1,8 @@
+using LegoGamesCheatCodeInputter.Views.Interfaces;
+
 namespace LegoGamesCheatCodeInputter.Views
 {
-    public sealed class ErrorView
+    public sealed class ErrorView : IErrorView
     {
         public void Render(Exception exception)
         {
