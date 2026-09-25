@@ -22,8 +22,39 @@ The app moves through characters with **Up** and **Down**, advances between char
 
 ### Supported games
 
+- LEGO Batman: The Video Game
+- LEGO Batman 2: DC Super Heroes
+- LEGO Batman 3: Beyond Gotham
+- LEGO City Undercover
+- LEGO DC Super-Villains
 - LEGO Harry Potter: Years 1–4
 - LEGO Harry Potter: Years 5–7
+- LEGO Indiana Jones: The Original Adventures
+- LEGO Indiana Jones 2: The Adventure Continues
+- LEGO Jurassic World
+- LEGO Lord of the Rings
+- LEGO Marvel Avengers
+- LEGO Marvel Super Heroes *(no cheat codes added yet)*
+- LEGO Marvel Super Heroes 2 *(no cheat codes added yet)*
+- LEGO Pirates of the Caribbean: The Video Game *(no cheat codes added yet)*
+- LEGO Star Wars: The Video Game *(no cheat codes added yet)*
+- LEGO Star Wars II: The Original Trilogy *(no cheat codes added yet)*
+- LEGO Star Wars: The Complete Saga *(no cheat codes added yet)*
+- LEGO Star Wars III: The Clone Wars *(no cheat codes added yet)*
+- LEGO Star Wars: The Force Awakens *(no cheat codes added yet)*
+- LEGO Star Wars: The Skywalker Saga *(no cheat codes added yet)*
+- LEGO The Hobbit *(no cheat codes added yet)*
+- LEGO The Incredibles *(no cheat codes added yet)*
+- LEGO Worlds *(no cheat codes added yet)*
+- The LEGO Movie Videogame *(no cheat codes added yet)*
+- The LEGO Movie 2 Videogame *(no cheat codes added yet)*
+- The LEGO Ninjago Movie Video Game *(no cheat codes added yet)*
+
+### Report missing cheat codes
+
+Found a missing or incorrect code? [Open an issue](https://github.com/MagnusHLund/lego-game-cheat-codes-inputter/issues/new) with the game title, code, what it unlocks, and a source or other evidence so it can be verified.
+
+You can also contribute the change directly: [fork the repository](https://github.com/MagnusHLund/lego-game-cheat-codes-inputter/fork), add or correct the entry in the matching game file under `LegoGamesCheatCodeInputter/Models/Games/`, then open a pull request from your fork. Include the source or evidence for the code in the pull request description.
 
 Keyboard simulation is provided by SharpHook. macOS may require Accessibility permission. On Linux, support and permissions depend on the input backend and desktop session; Wayland may have additional limitations.
 
@@ -79,11 +110,11 @@ The app reads `appsettings.json` from its application directory. When building f
 }
 ```
 
-| Setting | Default | Meaning |
-| --- | ---: | --- |
-| `KeyEventDelayMilliseconds` | `60` | Pause after each simulated key press. |
-| `CharacterSelectionDelayMilliseconds` | `120` | Pause after choosing a character and before advancing to the next position. |
-| `CodeSubmitDelayMilliseconds` | `120` | Pause after submitting a code. |
-| `FocusCountdownSeconds` | `5` | Time to focus the game before code entry starts. |
+| Setting                               | Default | Meaning                                                                     |
+| ------------------------------------- | ------: | --------------------------------------------------------------------------- |
+| `KeyEventDelayMilliseconds`           |    `60` | Pause after each simulated key press.                                       |
+| `CharacterSelectionDelayMilliseconds` |   `120` | Pause after choosing a character and before advancing to the next position. |
+| `CodeSubmitDelayMilliseconds`         |   `120` | Pause after submitting a code.                                              |
+| `FocusCountdownSeconds`               |     `5` | Time to focus the game before code entry starts.                            |
 
 Delay settings accept `0`–`60000` milliseconds. `FocusCountdownSeconds` accepts `0`–`60`. Invalid settings are reported when the app starts. Lower delay values enter codes faster; raise them if the game misses key presses.

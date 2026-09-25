@@ -1,0 +1,163 @@
+name: Create release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: Release tag to create (for example, v1.0.0)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  authorize:
+    name: Verify repository owner
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require the repository owner
+        env:
+          ACTOR: ${{ github.actor }}
+          REPOSITORY_OWNER: ${{ github.repository_owner }}
+        run: |
+          if [[ "${ACTOR,,}" != "${REPOSITORY_OWNER,,}" ]]; then
+            echo "::error::Only the repository owner ($REPOSITORY_OWNER) can create a release."
+            exit 1
+          fi
+
+      - name: Validate release tag
+        env:
+          TAG_NAME: ${{ inputs.tag_name }}
+        run: |
+          if [[ ! "$TAG_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.-][A-Za-z0-9.-]+)?$ ]]; then
+            echo "::error::Tag must use a version such as v1.0.0 or v1.0.0-rc.1."
+            exit 1
+          fi
+
+  test:
+    name: Run automated tests
+    needs: authorize
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore test dependencies
+        run: dotnet restore LegoGamesCheatCodeInputter.Tests/LegoGamesCheatCodeInputter.Tests.csproj
+
+      - name: Run tests
+        run: dotnet test LegoGamesCheatCodeInputter.Tests/LegoGamesCheatCodeInputter.Tests.csproj --configuration Release --no-restore
+
+  build:
+    name: Build ${{ matrix.rid }} release package
+    needs: [authorize, test]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - rid: win-x64
+            os: windows-latest
+          - rid: linux-x64
+            os: ubuntu-latest
+          - rid: linux-arm64
+            os: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Publish self-contained application
+        run: >-
+          dotnet publish LegoGamesCheatCodeInputter/LegoGamesCheatCodeInputter.csproj
+          --configuration Release
+          --runtime ${{ matrix.rid }}
+          --self-contained true
+          --output publish/${{ matrix.rid }}
+
+      - name: Sign Windows executable when signing secrets are configured
+        if: matrix.rid == 'win-x64'
+        shell: pwsh
+        env:
+          WINDOWS_CERTIFICATE_BASE64: ${{ secrets.WINDOWS_CERTIFICATE_BASE64 }}
+          WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:WINDOWS_CERTIFICATE_BASE64) -or
+              [string]::IsNullOrWhiteSpace($env:WINDOWS_CERTIFICATE_PASSWORD)) {
+            Write-Warning "Windows signing secrets are not configured; this release will contain an unsigned Windows executable."
+            exit 0
+          }
+
+          $certificatePath = Join-Path $env:RUNNER_TEMP "windows-signing-certificate.pfx"
+          [IO.File]::WriteAllBytes($certificatePath, [Convert]::FromBase64String($env:WINDOWS_CERTIFICATE_BASE64))
+          try {
+            $signtool = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin\*\x64\signtool.exe" |
+              Sort-Object FullName -Descending |
+              Select-Object -First 1 -ExpandProperty FullName
+            if (-not $signtool) { throw "Windows SDK SignTool was not found on this runner." }
+
+            & $signtool sign /f $certificatePath /p $env:WINDOWS_CERTIFICATE_PASSWORD /fd SHA256 /tr http://timestamp.digicert.com /td SHA256 "publish\win-x64\LegoGamesCheatCodeInputter.exe"
+            if ($LASTEXITCODE -ne 0) { throw "SignTool failed with exit code $LASTEXITCODE." }
+          }
+          finally {
+            Remove-Item $certificatePath -Force -ErrorAction SilentlyContinue
+          }
+
+      - name: Prepare release asset directory
+        run: mkdir -p release-assets
+        shell: bash
+
+      - name: Package Windows release
+        if: matrix.rid == 'win-x64'
+        shell: pwsh
+        run: Compress-Archive -Path * -DestinationPath "$env:GITHUB_WORKSPACE\release-assets\lego-game-cheat-codes-inputter-${{ matrix.rid }}.zip"
+        working-directory: publish/${{ matrix.rid }}
+
+      - name: Package Linux release
+        if: startsWith(matrix.rid, 'linux-')
+        shell: bash
+        run: tar -czf "../../release-assets/lego-game-cheat-codes-inputter-${{ matrix.rid }}.tar.gz" .
+        working-directory: publish/${{ matrix.rid }}
+
+      - name: Upload release package
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.rid }}
+          path: release-assets/*
+          if-no-files-found: error
+          retention-days: 1
+
+  release:
+    name: Publish GitHub release
+    needs: [authorize, test, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download release packages
+        uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          path: release-assets
+          merge-multiple: true
+
+      - name: Generate checksums
+        run: sha256sum release-assets/* > release-assets/SHA256SUMS
+
+      - name: Create GitHub release and attach packages
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ inputs.tag_name }}
+          REPOSITORY: ${{ github.repository }}
+          TARGET_SHA: ${{ github.sha }}
+        run: gh release create "$TAG_NAME" release-assets/* --repo "$REPOSITORY" --title "$TAG_NAME" --target "$TARGET_SHA" --generate-notes
