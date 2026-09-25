@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="LegoGamesCheatCodeInputter.Tests/LegoGamesCheatCodeInputter.Tests.csproj" />
+  <Project Path="LegoGamesCheatCodeInputter/LegoGamesCheatCodeInputter.csproj" />
+</Solution>
