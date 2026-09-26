@@ -11,5 +11,6 @@ namespace LegoGamesCheatCodeInputter.Controllers.Interfaces
     public interface IKeyboardInput : IDisposable
     {
         void Press(InputKey key);
+        void Release(InputKey key);
     }
 }

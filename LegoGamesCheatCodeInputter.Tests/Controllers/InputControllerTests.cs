@@ -143,6 +143,7 @@ public sealed class InputControllerTests
         InputController controller = new(
             new InputSettingsOptions
             {
+                KeyHoldDurationMilliseconds = 44,
                 KeyEventDelayMilliseconds = 11,
                 CharacterSelectionDelayMilliseconds = 22,
                 CodeSubmitDelayMilliseconds = 33,
@@ -160,9 +161,12 @@ public sealed class InputControllerTests
         Assert.Equal(
             new[]
             {
+                TimeSpan.FromMilliseconds(44),
                 TimeSpan.FromMilliseconds(11),
                 TimeSpan.FromMilliseconds(22),
+                TimeSpan.FromMilliseconds(44),
                 TimeSpan.FromMilliseconds(11),
+                TimeSpan.FromMilliseconds(44),
                 TimeSpan.FromMilliseconds(11),
                 TimeSpan.FromMilliseconds(33),
             },
@@ -222,6 +226,7 @@ public sealed class InputControllerTests
         new(
             new InputSettingsOptions
             {
+                KeyHoldDurationMilliseconds = 0,
                 KeyEventDelayMilliseconds = 0,
                 CharacterSelectionDelayMilliseconds = 0,
                 CodeSubmitDelayMilliseconds = 0,

@@ -14,7 +14,20 @@ namespace LegoGamesCheatCodeInputter.Controllers
 
         public void Press(InputKey key)
         {
-            KeyCode nativeKey = key switch
+            UioHookResult result = _simulator.SimulateKeyPress(GetNativeKey(key));
+            if (result != UioHookResult.Success)
+                throw new HookException(result, $"Could not simulate the {key} key.");
+        }
+
+        public void Release(InputKey key)
+        {
+            UioHookResult result = _simulator.SimulateKeyRelease(GetNativeKey(key));
+            if (result != UioHookResult.Success)
+                throw new HookException(result, $"Could not release the {key} key.");
+        }
+
+        private static KeyCode GetNativeKey(InputKey key) =>
+            key switch
             {
                 InputKey.Up => KeyCode.VcUp,
                 InputKey.Down => KeyCode.VcDown,
@@ -22,11 +35,6 @@ namespace LegoGamesCheatCodeInputter.Controllers
                 InputKey.Enter => KeyCode.VcEnter,
                 _ => throw new ArgumentOutOfRangeException(nameof(key), key, null),
             };
-
-            UioHookResult result = _simulator.SimulateKeyStroke(nativeKey);
-            if (result != UioHookResult.Success)
-                throw new HookException(result, $"Could not simulate the {key} key.");
-        }
 
         public void Dispose() => _simulator.Dispose();
     }

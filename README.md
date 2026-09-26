@@ -102,6 +102,7 @@ The app reads `appsettings.json` from its application directory. When building f
 ```json
 {
   "Input": {
+    "KeyHoldDurationMilliseconds": 60,
     "KeyEventDelayMilliseconds": 60,
     "CharacterSelectionDelayMilliseconds": 120,
     "CodeSubmitDelayMilliseconds": 120
@@ -112,9 +113,10 @@ The app reads `appsettings.json` from its application directory. When building f
 
 | Setting                               | Default | Meaning                                                                     |
 | ------------------------------------- | ------: | --------------------------------------------------------------------------- |
-| `KeyEventDelayMilliseconds`           |    `60` | Pause after each simulated key press.                                       |
+| `KeyHoldDurationMilliseconds`         |    `60` | How long each simulated key is held before release.                         |
+| `KeyEventDelayMilliseconds`           |    `60` | Pause after releasing each simulated key.                                   |
 | `CharacterSelectionDelayMilliseconds` |   `120` | Pause after choosing a character and before advancing to the next position. |
 | `CodeSubmitDelayMilliseconds`         |   `120` | Pause after submitting a code.                                              |
 | `FocusCountdownSeconds`               |     `5` | Time to focus the game before code entry starts.                            |
 
-Delay settings accept `0`–`60000` milliseconds. `FocusCountdownSeconds` accepts `0`–`60`. Invalid settings are reported when the app starts. Lower delay values enter codes faster; raise them if the game misses key presses.
+Delay settings accept `0`–`60000` milliseconds. `FocusCountdownSeconds` accepts `0`–`60`. Invalid settings are reported when the app starts. Increase `KeyHoldDurationMilliseconds` if a game misses simulated presses; the other delays control pacing between inputs.

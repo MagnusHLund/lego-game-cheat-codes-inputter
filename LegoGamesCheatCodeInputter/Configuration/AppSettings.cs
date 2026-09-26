@@ -39,6 +39,10 @@ namespace LegoGamesCheatCodeInputter.Configuration
             if (Input is null)
                 throw new InvalidDataException("The Input settings section is required.");
 
+            ValidateDelay(
+                nameof(Input.KeyHoldDurationMilliseconds),
+                Input.KeyHoldDurationMilliseconds
+            );
             ValidateDelay(nameof(Input.KeyEventDelayMilliseconds), Input.KeyEventDelayMilliseconds);
             ValidateDelay(
                 nameof(Input.CharacterSelectionDelayMilliseconds),

@@ -10,6 +10,7 @@ public sealed class SettingsTests
     {
         AppSettings settings = AppSettings.Load(Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".json"));
 
+        Assert.Equal(60, settings.Input.KeyHoldDurationMilliseconds);
         Assert.Equal(60, settings.Input.KeyEventDelayMilliseconds);
         Assert.Equal(120, settings.Input.CharacterSelectionDelayMilliseconds);
         Assert.Equal(120, settings.Input.CodeSubmitDelayMilliseconds);
@@ -20,12 +21,13 @@ public sealed class SettingsTests
     public void ValidFile_LoadsAllSettings()
     {
         using TemporarySettingsFile file = new("""
-            { "Input": { "KeyEventDelayMilliseconds": 0, "CharacterSelectionDelayMilliseconds": 60000,
+            { "Input": { "KeyHoldDurationMilliseconds": 30, "KeyEventDelayMilliseconds": 0, "CharacterSelectionDelayMilliseconds": 60000,
               "CodeSubmitDelayMilliseconds": 250 }, "FocusCountdownSeconds": 0 }
             """);
 
         AppSettings settings = AppSettings.Load(file.Path);
 
+        Assert.Equal(30, settings.Input.KeyHoldDurationMilliseconds);
         Assert.Equal(0, settings.Input.KeyEventDelayMilliseconds);
         Assert.Equal(60000, settings.Input.CharacterSelectionDelayMilliseconds);
         Assert.Equal(250, settings.Input.CodeSubmitDelayMilliseconds);
@@ -43,6 +45,8 @@ public sealed class SettingsTests
     }
 
     [Theory]
+    [InlineData("KeyHoldDurationMilliseconds", -1)]
+    [InlineData("KeyHoldDurationMilliseconds", 60001)]
     [InlineData("KeyEventDelayMilliseconds", -1)]
     [InlineData("KeyEventDelayMilliseconds", 60001)]
     [InlineData("CharacterSelectionDelayMilliseconds", -1)]

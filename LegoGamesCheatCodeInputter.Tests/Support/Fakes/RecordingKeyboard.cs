@@ -15,5 +15,7 @@ internal sealed class RecordingKeyboard : IKeyboardInput
         Keys.Add(key);
     }
 
+    public void Release(InputKey key) { }
+
     public void Dispose() => Disposed = true;
 }

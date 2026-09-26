@@ -92,6 +92,15 @@ namespace LegoGamesCheatCodeInputter.Controllers
         private async Task PressKey(IKeyboardInput keyboard, InputKey key)
         {
             keyboard.Press(key);
+            try
+            {
+                await Delay(_inputSettings.KeyHoldDurationMilliseconds);
+            }
+            finally
+            {
+                keyboard.Release(key);
+            }
+
             await Delay(_inputSettings.KeyEventDelayMilliseconds);
         }
 
