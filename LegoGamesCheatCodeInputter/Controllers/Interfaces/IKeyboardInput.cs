@@ -5,6 +5,7 @@ namespace LegoGamesCheatCodeInputter.Controllers.Interfaces
         Up,
         Down,
         Right,
+        Left,
         Enter,
     }
 

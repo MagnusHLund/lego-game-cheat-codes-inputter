@@ -50,8 +50,10 @@ namespace LegoGamesCheatCodeInputter.Controllers
                     char character = cheatCode.Code[position];
                     int targetIndex = Characters.IndexOf(character);
                     int currentIndex = currentCharacterIndices[position];
-                    int upDistance = (targetIndex - currentIndex + Characters.Length) % Characters.Length;
-                    int downDistance = (currentIndex - targetIndex + Characters.Length) % Characters.Length;
+                    int upDistance =
+                        (targetIndex - currentIndex + Characters.Length) % Characters.Length;
+                    int downDistance =
+                        (currentIndex - targetIndex + Characters.Length) % Characters.Length;
                     InputKey direction = upDistance <= downDistance ? InputKey.Up : InputKey.Down;
 
                     for (int step = 0; step < Math.Min(upDistance, downDistance); step++)
@@ -66,6 +68,13 @@ namespace LegoGamesCheatCodeInputter.Controllers
 
                 await PressKey(keyboard, InputKey.Enter);
                 await Delay(_inputSettings.CodeSubmitDelayMilliseconds);
+
+                // Move back to the first character position for the next code.
+                for (int step = 0; step < cheatCode.Code.Length; step++)
+                {
+                    await PressKey(keyboard, InputKey.Left);
+                }
+
                 onCodeCompleted?.Invoke(codeIndex + 1, cheatCodes.Count, cheatCode);
             }
         }

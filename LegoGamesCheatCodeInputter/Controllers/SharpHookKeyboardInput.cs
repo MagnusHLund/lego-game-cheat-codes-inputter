@@ -32,6 +32,7 @@ namespace LegoGamesCheatCodeInputter.Controllers
                 InputKey.Up => KeyCode.VcUp,
                 InputKey.Down => KeyCode.VcDown,
                 InputKey.Right => KeyCode.VcRight,
+                InputKey.Left => KeyCode.VcLeft,
                 InputKey.Enter => KeyCode.VcEnter,
                 _ => throw new ArgumentOutOfRangeException(nameof(key), key, null),
             };
