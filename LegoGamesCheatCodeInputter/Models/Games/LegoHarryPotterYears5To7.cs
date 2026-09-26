@@ -16,7 +16,7 @@ namespace LegoGamesCheatCodeInputter.Models.Games
                 new CheatCode { Code = "2FLY6B", Description = "Collect ghost studs" },
                 new CheatCode { Code = "J9U6Z9", Description = "Extra hearts" },
                 new CheatCode { Code = "ZEX7MV", Description = "Fall rescue" },
-                new CheatCode { Code = "Z9BFAD", Description = "Fast dig" },
+                new CheatCode { Code = "N6E8JF", Description = "Fast dig" },
                 new CheatCode { Code = "84QNQN", Description = "Gold brick detector" },
                 new CheatCode { Code = "TTMC6D", Description = "Hogwarts crest detector" },
                 new CheatCode { Code = "QQWC6B", Description = "Invincibility" },
