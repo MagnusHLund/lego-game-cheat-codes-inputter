@@ -10,6 +10,8 @@ Prebuilt downloads are intended to be available from [GitHub Releases](https://g
 
 A self-contained release includes the .NET runtime, so you do not need to install the .NET SDK or runtime. Releases must be built separately for each supported platform. If there is no release package available yet, see [For Developers](#for-developers) to run the app from source.
 
+Windows releases are unsigned. Windows may show a Microsoft Defender SmartScreen warning because the publisher is unverified. Only download releases from this repository or [the website](https://lego.magnuslund.com).
+
 ### Use the app
 
 1. Start the game and open its **Enter Code** screen.
