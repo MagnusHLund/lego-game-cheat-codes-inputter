@@ -16,6 +16,7 @@ namespace LegoGamesCheatCodeInputter.Models.Games
                 new CheatCode { Code = "H27KGC", Description = "Character studs" },
                 new CheatCode { Code = "HA79V8", Description = "Character Token Detector" },
                 new CheatCode { Code = "T7PVVN", Description = "Christmas" },
+                new CheatCode { Code = "MLAA8P", Description = "Collect ghost studs" },
                 new CheatCode { Code = "9GJ442", Description = "Colovaria" },
                 new CheatCode { Code = "4DMK2R", Description = "Disguise" },
                 new CheatCode { Code = "CD4JLX", Description = "Engorgio Skullus" },
