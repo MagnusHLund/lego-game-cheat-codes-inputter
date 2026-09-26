@@ -2,6 +2,8 @@
 
 Enter cheat codes in supported PC LEGO games without typing each one by hand. Choose the game, open its code-entry screen, and let the app navigate the characters for you.
 
+**[Download the latest version from the website](https://brickcodes.magnuslund.com)** — it automatically recommends the right release for your platform.
+
 ## For Players
 
 ### Download
@@ -10,7 +12,7 @@ Prebuilt downloads are intended to be available from [GitHub Releases](https://g
 
 A self-contained release includes the .NET runtime, so you do not need to install the .NET SDK or runtime. Releases must be built separately for each supported platform. If there is no release package available yet, see [For Developers](#for-developers) to run the app from source.
 
-Windows releases are unsigned. Windows may show a Microsoft Defender SmartScreen warning because the publisher is unverified. Only download releases from this repository or [the website](https://lego.magnuslund.com).
+Windows releases are unsigned. Windows may show a Microsoft Defender SmartScreen warning because the publisher is unverified. Only download releases from this repository or [the website](https://brickcodes.magnuslund.com).
 
 ### Use the app
 

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://brickcodes.magnuslund.com/sitemap.xml
