@@ -20,7 +20,7 @@ public sealed class InputControllerTests
         Assert.Equal(
             new[] { InputKey.Up, InputKey.Up, InputKey.Right }
                 .Concat(Enumerable.Repeat(InputKey.Down, 11))
-                .Concat([InputKey.Right, InputKey.Enter]),
+                .Concat([InputKey.Right, InputKey.Enter, InputKey.Left, InputKey.Left]),
             keyboard.Keys
         );
         Assert.All(delays, delay => Assert.Equal(TimeSpan.FromMilliseconds(0), delay));
@@ -32,7 +32,7 @@ public sealed class InputControllerTests
         RecordingKeyboard keyboard = new();
         await CreateController(keyboard).InputCheatCodes([Code("A")]);
 
-        Assert.Equal([InputKey.Right, InputKey.Enter], keyboard.Keys);
+        Assert.Equal([InputKey.Right, InputKey.Enter, InputKey.Left], keyboard.Keys);
     }
 
     [Fact]
@@ -47,7 +47,8 @@ public sealed class InputControllerTests
                 .Append(InputKey.Right)
                 .Append(InputKey.Down)
                 .Append(InputKey.Right)
-                .Append(InputKey.Enter),
+                .Append(InputKey.Enter)
+                .Concat(Enumerable.Repeat(InputKey.Left, 2)),
             keyboard.Keys
         );
     }
@@ -77,7 +78,16 @@ public sealed class InputControllerTests
             );
 
         Assert.Equal(
-            new[] { InputKey.Right, InputKey.Enter, InputKey.Up, InputKey.Right, InputKey.Enter },
+            new[]
+            {
+                InputKey.Right,
+                InputKey.Enter,
+                InputKey.Left,
+                InputKey.Up,
+                InputKey.Right,
+                InputKey.Enter,
+                InputKey.Left,
+            },
             keyboard.Keys
         );
         Assert.Equal([(1, 2, "A"), (2, 2, "B")], progress);
@@ -95,9 +105,11 @@ public sealed class InputControllerTests
                 .Repeat(InputKey.Down, 11)
                 .Append(InputKey.Right)
                 .Append(InputKey.Enter)
+                .Append(InputKey.Left)
                 .Concat(Enumerable.Repeat(InputKey.Up, 11))
                 .Append(InputKey.Right)
-                .Append(InputKey.Enter),
+                .Append(InputKey.Enter)
+                .Append(InputKey.Left),
             keyboard.Keys
         );
     }
@@ -188,6 +200,8 @@ public sealed class InputControllerTests
                 TimeSpan.FromMilliseconds(44),
                 TimeSpan.FromMilliseconds(11),
                 TimeSpan.FromMilliseconds(33),
+                TimeSpan.FromMilliseconds(44),
+                TimeSpan.FromMilliseconds(11),
             },
             delays
         );
