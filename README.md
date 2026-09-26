@@ -13,7 +13,7 @@ A self-contained release includes the .NET runtime, so you do not need to instal
 ### Use the app
 
 1. Start the game and open its **Enter Code** screen.
-2. Make sure the game is ready to accept a code and each character position starts at `A`.
+2. Make sure the game is ready to accept a code, all six characters are set to `A`, and the first character position is selected.
 3. Start the inputter and choose the matching game with **Up** and **Down**. Press **Enter** to select it, or **Escape** to exit.
 4. Press Enter at the prompt to begin the countdown, then switch focus to the game before it ends.
 5. Leave the game focused and avoid using the keyboard until the inputter finishes.
@@ -34,21 +34,21 @@ The app moves through characters with **Up** and **Down**, advances between char
 - LEGO Jurassic World
 - LEGO Lord of the Rings
 - LEGO Marvel Avengers
-- LEGO Marvel Super Heroes *(no cheat codes added yet)*
-- LEGO Marvel Super Heroes 2 *(no cheat codes added yet)*
-- LEGO Pirates of the Caribbean: The Video Game *(no cheat codes added yet)*
-- LEGO Star Wars: The Video Game *(no cheat codes added yet)*
-- LEGO Star Wars II: The Original Trilogy *(no cheat codes added yet)*
-- LEGO Star Wars: The Complete Saga *(no cheat codes added yet)*
-- LEGO Star Wars III: The Clone Wars *(no cheat codes added yet)*
-- LEGO Star Wars: The Force Awakens *(no cheat codes added yet)*
-- LEGO Star Wars: The Skywalker Saga *(no cheat codes added yet)*
-- LEGO The Hobbit *(no cheat codes added yet)*
-- LEGO The Incredibles *(no cheat codes added yet)*
-- LEGO Worlds *(no cheat codes added yet)*
-- The LEGO Movie Videogame *(no cheat codes added yet)*
-- The LEGO Movie 2 Videogame *(no cheat codes added yet)*
-- The LEGO Ninjago Movie Video Game *(no cheat codes added yet)*
+- LEGO Marvel Super Heroes _(no cheat codes added yet)_
+- LEGO Marvel Super Heroes 2 _(no cheat codes added yet)_
+- LEGO Pirates of the Caribbean: The Video Game _(no cheat codes added yet)_
+- LEGO Star Wars: The Video Game _(no cheat codes added yet)_
+- LEGO Star Wars II: The Original Trilogy _(no cheat codes added yet)_
+- LEGO Star Wars: The Complete Saga _(no cheat codes added yet)_
+- LEGO Star Wars III: The Clone Wars _(no cheat codes added yet)_
+- LEGO Star Wars: The Force Awakens _(no cheat codes added yet)_
+- LEGO Star Wars: The Skywalker Saga _(no cheat codes added yet)_
+- LEGO The Hobbit _(no cheat codes added yet)_
+- LEGO The Incredibles _(no cheat codes added yet)_
+- LEGO Worlds _(no cheat codes added yet)_
+- The LEGO Movie Videogame _(no cheat codes added yet)_
+- The LEGO Movie 2 Videogame _(no cheat codes added yet)_
+- The LEGO Ninjago Movie Video Game _(no cheat codes added yet)_
 
 ### Report missing cheat codes
 

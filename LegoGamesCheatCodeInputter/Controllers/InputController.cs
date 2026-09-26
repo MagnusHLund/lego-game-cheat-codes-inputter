@@ -36,18 +36,22 @@ namespace LegoGamesCheatCodeInputter.Controllers
             if (cheatCodes.Count == 0)
                 return;
 
+            int[] currentCharacterIndices = new int[cheatCodes.Max(item => item.Code.Length)];
+
             using IKeyboardInput keyboard = _keyboardInputFactory();
             for (int codeIndex = 0; codeIndex < cheatCodes.Count; codeIndex++)
             {
                 CheatCode cheatCode = cheatCodes[codeIndex];
 
-                // Assumes each code-entry position starts at A, Right advances to the next position,
-                // and Enter submits the completed code. Focus the game's code-entry screen first.
-                foreach (char character in cheatCode.Code)
+                // The screen starts at AAAAAA, but keeps the entered characters after submitting.
+                // Track each position so later codes move from the game's current selection.
+                for (int position = 0; position < cheatCode.Code.Length; position++)
                 {
+                    char character = cheatCode.Code[position];
                     int targetIndex = Characters.IndexOf(character);
-                    int upDistance = targetIndex;
-                    int downDistance = Characters.Length - targetIndex;
+                    int currentIndex = currentCharacterIndices[position];
+                    int upDistance = (targetIndex - currentIndex + Characters.Length) % Characters.Length;
+                    int downDistance = (currentIndex - targetIndex + Characters.Length) % Characters.Length;
                     InputKey direction = upDistance <= downDistance ? InputKey.Up : InputKey.Down;
 
                     for (int step = 0; step < Math.Min(upDistance, downDistance); step++)
@@ -55,6 +59,7 @@ namespace LegoGamesCheatCodeInputter.Controllers
                         await PressKey(keyboard, direction);
                     }
 
+                    currentCharacterIndices[position] = targetIndex;
                     await Delay(_inputSettings.CharacterSelectionDelayMilliseconds);
                     await PressKey(keyboard, InputKey.Right);
                 }

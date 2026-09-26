@@ -84,6 +84,25 @@ public sealed class InputControllerTests
     }
 
     [Fact]
+    public async Task MultipleCodes_ContinuesFromPreviouslySelectedCharacters()
+    {
+        RecordingKeyboard keyboard = new();
+
+        await CreateController(keyboard).InputCheatCodes([Code("Z"), Code("A")]);
+
+        Assert.Equal(
+            Enumerable
+                .Repeat(InputKey.Down, 11)
+                .Append(InputKey.Right)
+                .Append(InputKey.Enter)
+                .Concat(Enumerable.Repeat(InputKey.Up, 11))
+                .Append(InputKey.Right)
+                .Append(InputKey.Enter),
+            keyboard.Keys
+        );
+    }
+
+    [Fact]
     public async Task EmptyList_DoesNotCreateKeyboardOrSendKeys()
     {
         int factoryCalls = 0;
