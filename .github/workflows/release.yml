@@ -84,6 +84,10 @@ jobs:
           --runtime ${{ matrix.rid }}
           --self-contained true
           --output publish/${{ matrix.rid }}
+          -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:EnableCompressionInSingleFile=true
+          -p:DebugType=none
 
       - name: Prepare release asset directory
         run: mkdir -p release-assets
