@@ -2,7 +2,7 @@ using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Models.Games
 {
-    public sealed class LegoHarryPotterYears5To7 : IGame
+    public sealed class LegoHarryPotterYearsFiveToSeven : IGame
     {
         public string Title { get; } = "Lego Harry Potter: Years 5-7";
 
