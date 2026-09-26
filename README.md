@@ -24,11 +24,11 @@ The app moves through characters with **Up** and **Down**, advances between char
 
 ### Supported games
 
+These are the games currently available in the app. Games that use a different code-entry system are not included.
+
 - LEGO Batman: The Video Game
 - LEGO Batman 2: DC Super Heroes
 - LEGO Batman 3: Beyond Gotham
-- LEGO City Undercover
-- LEGO DC Super-Villains
 - LEGO Harry Potter: Years 1–4
 - LEGO Harry Potter: Years 5–7
 - LEGO Indiana Jones: The Original Adventures
@@ -36,21 +36,16 @@ The app moves through characters with **Up** and **Down**, advances between char
 - LEGO Jurassic World
 - LEGO Lord of the Rings
 - LEGO Marvel Avengers
-- LEGO Marvel Super Heroes _(no cheat codes added yet)_
-- LEGO Marvel Super Heroes 2 _(no cheat codes added yet)_
-- LEGO Pirates of the Caribbean: The Video Game _(no cheat codes added yet)_
-- LEGO Star Wars: The Video Game _(no cheat codes added yet)_
-- LEGO Star Wars II: The Original Trilogy _(no cheat codes added yet)_
-- LEGO Star Wars: The Complete Saga _(no cheat codes added yet)_
-- LEGO Star Wars III: The Clone Wars _(no cheat codes added yet)_
-- LEGO Star Wars: The Force Awakens _(no cheat codes added yet)_
-- LEGO Star Wars: The Skywalker Saga _(no cheat codes added yet)_
-- LEGO The Hobbit _(no cheat codes added yet)_
-- LEGO The Incredibles _(no cheat codes added yet)_
-- LEGO Worlds _(no cheat codes added yet)_
-- The LEGO Movie Videogame _(no cheat codes added yet)_
-- The LEGO Movie 2 Videogame _(no cheat codes added yet)_
-- The LEGO Ninjago Movie Video Game _(no cheat codes added yet)_
+- LEGO Marvel Super Heroes
+- LEGO Marvel Super Heroes 2
+- LEGO Pirates of the Caribbean: The Video Game
+- LEGO Star Wars: The Complete Saga
+- LEGO Star Wars: The Force Awakens
+- LEGO Star Wars: The Video Game
+- LEGO Star Wars III: The Clone Wars
+- LEGO Star Wars II: The Original Trilogy
+- LEGO The Hobbit
+- The LEGO Ninjago Movie Video Game
 
 ### Report missing cheat codes
 
