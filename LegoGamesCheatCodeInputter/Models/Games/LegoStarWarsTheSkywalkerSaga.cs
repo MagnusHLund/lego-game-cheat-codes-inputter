@@ -2,11 +2,11 @@ using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Models.Games
 {
-    public sealed class LegoStarWarsTheSkywalkerSaga : IGame
+    public sealed class LegoStarWarsTheSkywalkerSaga : AbstractGame
     {
-        public string Title { get; } = "Lego Star Wars: The Skywalker Saga";
+        public override string Title { get; } = "Lego Star Wars: The Skywalker Saga";
 
-        public IReadOnlyList<CheatCode> Codes { get; } =
+        public override IReadOnlyList<CheatCode> Codes { get; } =
             new List<CheatCode>
             {
                 new CheatCode { Code = "KH7P320", Description = "Aayla Secure" },

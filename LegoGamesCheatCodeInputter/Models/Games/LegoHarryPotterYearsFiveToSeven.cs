@@ -2,11 +2,11 @@ using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Models.Games
 {
-    public sealed class LegoHarryPotterYearsFiveToSeven : IGame
+    public sealed class LegoHarryPotterYearsFiveToSeven : AbstractGame
     {
-        public string Title { get; } = "Lego Harry Potter: Years 5-7";
+        public override string Title { get; } = "Lego Harry Potter: Years 5-7";
 
-        public IReadOnlyList<CheatCode> Codes { get; } =
+        public override IReadOnlyList<CheatCode> Codes { get; } =
             new List<CheatCode>
             {
                 new CheatCode { Code = "AUC8EH", Description = "Carrot wands" },

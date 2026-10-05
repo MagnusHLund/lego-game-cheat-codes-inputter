@@ -19,11 +19,11 @@ namespace LegoGamesCheatCodeInputter.Controllers
         private readonly IErrorView _errorView;
 
         private readonly AppSettings _settings;
-        private readonly IReadOnlyList<IGame> _games;
+        private readonly IReadOnlyList<AbstractGame> _games;
 
         public GameController(
             AppSettings settings,
-            IReadOnlyList<IGame>? games = null,
+            IReadOnlyList<AbstractGame>? games = null,
             IInputController? inputController = null,
             IGameSelectionView? gameSelectionView = null,
             IStartingWorkView? startingWorkView = null,
@@ -47,8 +47,8 @@ namespace LegoGamesCheatCodeInputter.Controllers
 
         public async Task Main()
         {
-            IGame[] games = GetGames();
-            IGame? selectedGame = _selectGameMenuView.Render(games);
+            AbstractGame[] games = GetGames();
+            AbstractGame? selectedGame = _selectGameMenuView.Render(games);
             if (selectedGame is null)
                 return;
 
@@ -60,7 +60,7 @@ namespace LegoGamesCheatCodeInputter.Controllers
 
             try
             {
-                await _inputController.InputCheatCodes(selectedGame.Codes, _progressView.Render);
+                await _inputController.InputCheatCodes(selectedGame, _progressView.Render);
                 _completedView.Render();
             }
             catch (Exception exception)
@@ -69,7 +69,7 @@ namespace LegoGamesCheatCodeInputter.Controllers
             }
         }
 
-        private IGame[] GetGames()
+        private AbstractGame[] GetGames()
         {
             return _games.OrderBy(g => g.Title).ToArray();
         }

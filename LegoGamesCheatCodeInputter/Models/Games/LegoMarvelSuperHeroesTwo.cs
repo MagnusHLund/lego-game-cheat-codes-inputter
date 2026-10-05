@@ -2,11 +2,11 @@ using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Models.Games
 {
-    public sealed class LegoMarvelSuperHeroesTwo : IGame
+    public sealed class LegoMarvelSuperHeroesTwo : AbstractGame
     {
-        public string Title { get; } = "Lego Marvel Super Heroes 2";
+        public override string Title { get; } = "Lego Marvel Super Heroes 2";
 
-        public IReadOnlyList<CheatCode> Codes { get; } =
+        public override IReadOnlyList<CheatCode> Codes { get; } =
             new List<CheatCode>
             {
                 new CheatCode { Code = "BCR7QJ", Description = "Ant-Man" },

@@ -12,8 +12,8 @@ public sealed class ConsoleViewTests
     [Fact]
     public void GameMenu_ReturnsSelectedGameAfterArrowNavigation()
     {
-        IGame first = new FakeGame("First", []);
-        IGame second = new FakeGame("Second", []);
+        AbstractGame first = new FakeGame("First", []);
+        AbstractGame second = new FakeGame("Second", []);
         Queue<ConsoleKeyInfo> keys = new([Key(ConsoleKey.DownArrow), Key(ConsoleKey.Enter)]);
         using StringWriter output = new();
         TextWriter original = Console.Out;

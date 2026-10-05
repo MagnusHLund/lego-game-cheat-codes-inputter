@@ -2,11 +2,11 @@ using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Models.Games
 {
-    public sealed class LegoStarWarsThreeTheCloneWars : IGame
+    public sealed class LegoStarWarsThreeTheCloneWars : AbstractGame
     {
-        public string Title { get; } = "Lego Star Wars III: The Clone Wars";
+        public override string Title { get; } = "Lego Star Wars III: The Clone Wars";
 
-        public IReadOnlyList<CheatCode> Codes { get; } =
+        public override IReadOnlyList<CheatCode> Codes { get; } =
             new List<CheatCode>
             {
                 new CheatCode { Code = "N1CKR1", Description = "10x Studs" },
@@ -54,7 +54,7 @@ namespace LegoGamesCheatCodeInputter.Models.Games
                 new CheatCode { Code = "JRPR2A", Description = "Commander Ponds" },
                 new CheatCode { Code = "5XZQSV", Description = "Commander Stone" },
                 new CheatCode { Code = "QEGU64", Description = "Commando Droid" },
-                new CheatCode { Code = "LEWR7WM", Description = "Count Dooku" },
+                new CheatCode { Code = "EWR7WM", Description = "Count Dooku" },
                 new CheatCode { Code = "X1V4N2", Description = "Dark Side" },
                 new CheatCode { Code = "QH68AK", Description = "Darth Maul (Classic)" },
                 new CheatCode { Code = "QXY5XN", Description = "Darth Sidius (Classic)" },

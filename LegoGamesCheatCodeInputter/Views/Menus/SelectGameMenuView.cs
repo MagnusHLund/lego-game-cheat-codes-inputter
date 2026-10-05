@@ -12,7 +12,7 @@ namespace LegoGamesCheatCodeInputter.Views.Menus
             _readKey = readKey ?? (() => Console.ReadKey(true));
         }
 
-        public IGame? Render(IGame[] games)
+        public AbstractGame? Render(AbstractGame[] games)
         {
             ArgumentNullException.ThrowIfNull(games);
             if (games.Length == 0)

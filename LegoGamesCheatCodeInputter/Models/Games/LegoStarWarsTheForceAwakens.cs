@@ -2,11 +2,11 @@ using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Models.Games
 {
-    public sealed class LegoStarWarsTheForceAwakens : IGame
+    public sealed class LegoStarWarsTheForceAwakens : AbstractGame
     {
-        public string Title { get; } = "Lego Star Wars: The Force Awakens";
+        public override string Title { get; } = "Lego Star Wars: The Force Awakens";
 
-        public IReadOnlyList<CheatCode> Codes { get; } =
+        public override IReadOnlyList<CheatCode> Codes { get; } =
             new List<CheatCode>
             {
                 new CheatCode { Code = "QLLJXD", Description = "B-U4D" },

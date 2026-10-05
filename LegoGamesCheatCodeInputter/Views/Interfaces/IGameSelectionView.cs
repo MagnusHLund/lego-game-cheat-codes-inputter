@@ -4,6 +4,6 @@ namespace LegoGamesCheatCodeInputter.Views.Interfaces
 {
     public interface IGameSelectionView
     {
-        IGame? Render(IGame[] games);
+        AbstractGame? Render(AbstractGame[] games);
     }
 }

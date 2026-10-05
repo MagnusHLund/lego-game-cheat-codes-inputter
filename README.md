@@ -33,20 +33,17 @@ These are the games currently available in the app. Games that use a different c
 - LEGO Batman 3: Beyond Gotham
 - LEGO Harry Potter: Years 1–4
 - LEGO Harry Potter: Years 5–7
-- LEGO Indiana Jones: The Original Adventures
 - LEGO Indiana Jones 2: The Adventure Continues
 - LEGO Jurassic World
 - LEGO Lord of the Rings
 - LEGO Marvel Avengers
 - LEGO Marvel Super Heroes
-- LEGO Marvel Super Heroes 2
 - LEGO Pirates of the Caribbean: The Video Game
-- LEGO Star Wars: The Complete Saga
 - LEGO Star Wars: The Force Awakens
-- LEGO Star Wars: The Video Game
 - LEGO Star Wars III: The Clone Wars
-- LEGO Star Wars II: The Original Trilogy
 - LEGO The Hobbit
+- LEGO The Incredibles
+- The LEGO movie video game
 - The LEGO Ninjago Movie Video Game
 
 ### Report missing cheat codes
@@ -96,15 +93,17 @@ Replace `win-x64` with the appropriate .NET runtime identifier for the target pl
 
 ### Configuration
 
-The app reads `appsettings.json` from its application directory. When building from source, edit `LegoGamesCheatCodeInputter/appsettings.json`; it is copied to the build output. For a published package, keep the settings file next to the executable. If the file is missing, the app uses these defaults:
+The app reads `appsettings.json` from its application directory.
+When building from source, edit `LegoGamesCheatCodeInputter/appsettings.json`; it is copied to the build output.
+For a published package, keep the settings file next to the executable. If the file is missing, the app uses these defaults:
 
 ```json
 {
   "Input": {
-    "KeyHoldDurationMilliseconds": 60,
-    "KeyEventDelayMilliseconds": 60,
-    "CharacterSelectionDelayMilliseconds": 120,
-    "CodeSubmitDelayMilliseconds": 120
+    "KeyHoldDurationMilliseconds": 50,
+    "KeyEventDelayMilliseconds": 90,
+    "CharacterSelectionDelayMilliseconds": 90,
+    "CodeSubmitDelayMilliseconds": 50
   },
   "FocusCountdownSeconds": 5
 }
@@ -112,10 +111,10 @@ The app reads `appsettings.json` from its application directory. When building f
 
 | Setting                               | Default | Meaning                                                                     |
 | ------------------------------------- | ------: | --------------------------------------------------------------------------- |
-| `KeyHoldDurationMilliseconds`         |    `60` | How long each simulated key is held before release.                         |
-| `KeyEventDelayMilliseconds`           |    `60` | Pause after releasing each simulated key.                                   |
-| `CharacterSelectionDelayMilliseconds` |   `120` | Pause after choosing a character and before advancing to the next position. |
-| `CodeSubmitDelayMilliseconds`         |   `120` | Pause after submitting a code.                                              |
+| `KeyHoldDurationMilliseconds`         |    `50` | How long each simulated key is held before release.                         |
+| `KeyEventDelayMilliseconds`           |    `90` | Pause after releasing each simulated key.                                   |
+| `CharacterSelectionDelayMilliseconds` |    `90` | Pause after choosing a character and before advancing to the next position. |
+| `CodeSubmitDelayMilliseconds`         |    `50` | Pause after submitting a code.                                              |
 | `FocusCountdownSeconds`               |     `5` | Time to focus the game before code entry starts.                            |
 
 Delay settings accept `0`–`60000` milliseconds. `FocusCountdownSeconds` accepts `0`–`60`. Invalid settings are reported when the app starts. Increase `KeyHoldDurationMilliseconds` if a game misses simulated presses; the other delays control pacing between inputs.

@@ -3,11 +3,11 @@ using LegoGamesCheatCodeInputter.Views.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Tests.Support.Fakes;
 
-internal sealed class RecordingSelectionView(IGame? result) : IGameSelectionView
+internal sealed class RecordingSelectionView(AbstractGame? result) : IGameSelectionView
 {
-    public IGame[]? Games { get; private set; }
+    public AbstractGame[]? Games { get; private set; }
 
-    public IGame? Render(IGame[] games)
+    public AbstractGame? Render(AbstractGame[] games)
     {
         Games = games;
         return result;

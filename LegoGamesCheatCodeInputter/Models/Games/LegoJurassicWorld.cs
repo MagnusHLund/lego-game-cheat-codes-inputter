@@ -2,11 +2,11 @@ using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Models.Games
 {
-    public sealed class LegoJurassicWorld : IGame
+    public sealed class LegoJurassicWorld : AbstractGame
     {
-        public string Title { get; } = "Lego Jurassic World";
+        public override string Title { get; } = "Lego Jurassic World";
 
-        public IReadOnlyList<CheatCode> Codes { get; } =
+        public override IReadOnlyList<CheatCode> Codes { get; } =
             new List<CheatCode>
             {
                 new CheatCode { Code = "AU25GR", Description = "ACU Trooper (Female)" },

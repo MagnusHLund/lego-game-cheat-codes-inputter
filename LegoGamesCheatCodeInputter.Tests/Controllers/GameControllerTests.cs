@@ -87,7 +87,7 @@ public sealed class GameControllerTests
     }
 
     private static GameController CreateController(
-        IReadOnlyList<IGame> games,
+        IReadOnlyList<AbstractGame> games,
         RecordingSelectionView selection,
         RecordingStartingView starting,
         RecordingInputController input,

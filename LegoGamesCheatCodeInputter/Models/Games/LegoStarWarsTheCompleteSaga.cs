@@ -1,12 +1,15 @@
+using LegoGamesCheatCodeInputter.Controllers.Interfaces;
 using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Models.Games
 {
-    public sealed class LegoStarWarsTheCompleteSaga : IGame
+    public sealed class LegoStarWarsTheCompleteSaga : AbstractGame
     {
-        public string Title { get; } = "Lego Star Wars: The Complete Saga";
+        public override string Title { get; } = "Lego Star Wars: The Complete Saga";
 
-        public IReadOnlyList<CheatCode> Codes { get; } =
+        public override InputKey[] DefaultSubmitInputs { get; } = { InputKey.U, InputKey.NumPad5 };
+
+        public override IReadOnlyList<CheatCode> Codes { get; } =
             new List<CheatCode>
             {
                 new CheatCode { Code = "DVY683", Description = "4-LOM" },

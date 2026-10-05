@@ -7,6 +7,8 @@ namespace LegoGamesCheatCodeInputter.Controllers.Interfaces
         Right,
         Left,
         Enter,
+        U,
+        NumPad5,
     }
 
     public interface IKeyboardInput : IDisposable
