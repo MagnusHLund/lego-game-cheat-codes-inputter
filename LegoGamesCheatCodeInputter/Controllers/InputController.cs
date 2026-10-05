@@ -151,5 +151,10 @@ namespace LegoGamesCheatCodeInputter.Controllers
         }
 
         private Task Delay(int milliseconds) => _delay(TimeSpan.FromMilliseconds(milliseconds));
+
+        public async Task InputCheatCodes()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

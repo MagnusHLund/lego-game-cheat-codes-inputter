@@ -1,5 +1,6 @@
 using LegoGamesCheatCodeInputter.Controllers.Interfaces;
 using LegoGamesCheatCodeInputter.Models;
+using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Tests.Support.Fakes;
 
@@ -9,15 +10,15 @@ internal sealed class RecordingInputController : IInputController
     public Exception? Failure { get; init; }
 
     public Task InputCheatCodes(
-        IReadOnlyList<CheatCode> cheatCodes,
+        AbstractGame game,
         Action<int, int, CheatCode>? onCodeCompleted = null
     )
     {
-        Codes = cheatCodes;
+        Codes = game.Codes;
         if (Failure is not null)
             throw Failure;
-        if (cheatCodes.Count > 0)
-            onCodeCompleted?.Invoke(1, cheatCodes.Count, cheatCodes[0]);
+        if (Codes is not null && Codes.Count > 0)
+            onCodeCompleted?.Invoke(1, Codes.Count, Codes[0]);
         return Task.CompletedTask;
     }
 }
