@@ -2,11 +2,11 @@ using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Models.Games
 {
-    public sealed class LegoBatmanThreeBeyondGotham : IGame
+    public sealed class LegoBatmanThreeBeyondGotham : AbstractGame
     {
-        public string Title { get; } = "Lego Batman 3: Beyond Gotham";
+        public override string Title { get; } = "Lego Batman 3: Beyond Gotham";
 
-        public IReadOnlyList<CheatCode> Codes { get; } =
+        public override IReadOnlyList<CheatCode> Codes { get; } =
             new List<CheatCode>
             {
                 new CheatCode { Code = "V3GTHB", Description = "Unlocks Aquaman" },

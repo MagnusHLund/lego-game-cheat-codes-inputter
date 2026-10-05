@@ -2,11 +2,11 @@ using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Models.Games
 {
-    public sealed class LegoCityUndercover : IGame
+    public sealed class LegoCityUndercover : AbstractGame
     {
-        public string Title { get; } = "Lego City Undercover";
+        public override string Title { get; } = "Lego City Undercover";
 
-        public IReadOnlyList<CheatCode> Codes { get; } =
+        public override IReadOnlyList<CheatCode> Codes { get; } =
             new List<CheatCode>
             {
                 new CheatCode { Code = "9BUK3T", Description = "Attract bricks" },

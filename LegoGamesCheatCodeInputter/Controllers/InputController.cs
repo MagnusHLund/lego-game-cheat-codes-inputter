@@ -1,12 +1,15 @@
 using LegoGamesCheatCodeInputter.Configuration;
 using LegoGamesCheatCodeInputter.Controllers.Interfaces;
 using LegoGamesCheatCodeInputter.Models;
+using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Controllers
 {
     public sealed class InputController : IInputController
     {
         private const string Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        private readonly ICheatCodeOptimizationController _cheatCodeOptimizationController;
 
         private readonly Func<IKeyboardInput> _keyboardInputFactory;
         private readonly InputSettingsOptions _inputSettings;
@@ -18,30 +21,39 @@ namespace LegoGamesCheatCodeInputter.Controllers
         public InputController(
             InputSettingsOptions? inputSettings = null,
             Func<IKeyboardInput>? keyboardInputFactory = null,
-            Func<TimeSpan, Task>? delay = null
+            Func<TimeSpan, Task>? delay = null,
+            ICheatCodeOptimizationController? cheatCodeOptimizationController = null
         )
         {
             _keyboardInputFactory = keyboardInputFactory ?? (() => new SharpHookKeyboardInput());
             _inputSettings = inputSettings ?? new InputSettingsOptions();
             _delay = delay ?? Task.Delay;
+
+            _cheatCodeOptimizationController =
+                cheatCodeOptimizationController ?? new CheatCodeOptimizationController();
         }
 
         public async Task InputCheatCodes(
-            IReadOnlyList<CheatCode> cheatCodes,
+            AbstractGame game,
             Action<int, int, CheatCode>? onCodeCompleted = null
         )
         {
-            ArgumentNullException.ThrowIfNull(cheatCodes);
-            ValidateCodes(cheatCodes);
-            if (cheatCodes.Count == 0)
+            ArgumentNullException.ThrowIfNull(game);
+            ValidateCodes(game.Codes);
+            if (game.Codes.Count == 0)
+            {
                 return;
+            }
 
-            int[] currentCharacterIndices = new int[cheatCodes.Max(item => item.Code.Length)];
+            IReadOnlyList<CheatCode> optimizedCheatCodes =
+                _cheatCodeOptimizationController.Optimize(game.Codes);
+
+            int[] currentCharacterIndices = new int[game.Codes.Max(item => item.Code.Length)];
 
             using IKeyboardInput keyboard = _keyboardInputFactory();
-            for (int codeIndex = 0; codeIndex < cheatCodes.Count; codeIndex++)
+            for (int codeIndex = 0; codeIndex < game.Codes.Count; codeIndex++)
             {
-                CheatCode cheatCode = cheatCodes[codeIndex];
+                CheatCode cheatCode = optimizedCheatCodes[codeIndex];
 
                 // The screen starts at AAAAAA, but keeps the entered characters after submitting.
                 // Track each position so later codes move from the game's current selection.
@@ -66,16 +78,28 @@ namespace LegoGamesCheatCodeInputter.Controllers
                     await PressKey(keyboard, InputKey.Right);
                 }
 
-                await PressKey(keyboard, InputKey.Enter);
+                await SubmitCode(keyboard, game.DefaultSubmitInputs);
                 await Delay(_inputSettings.CodeSubmitDelayMilliseconds);
 
-                // Move back to the first character position for the next code.
-                for (int step = 0; step < cheatCode.Code.Length; step++)
+                if (!game.InputOptimizations.CanResetByGoingRight)
                 {
-                    await PressKey(keyboard, InputKey.Left);
+                    // Move back to the first character position for the next code.
+                    for (int step = 0; step < cheatCode.Code.Length; step++)
+                    {
+                        await PressKey(keyboard, InputKey.Left);
+                    }
                 }
 
-                onCodeCompleted?.Invoke(codeIndex + 1, cheatCodes.Count, cheatCode);
+                CheatCode? nextCheatCode =
+                    codeIndex + 1 < optimizedCheatCodes.Count
+                        ? optimizedCheatCodes[codeIndex + 1]
+                        : null;
+
+                onCodeCompleted?.Invoke(
+                    codeIndex + 1,
+                    game.Codes.Count,
+                    nextCheatCode ?? cheatCode
+                );
             }
         }
 
@@ -116,6 +140,14 @@ namespace LegoGamesCheatCodeInputter.Controllers
             }
 
             await Delay(_inputSettings.KeyEventDelayMilliseconds);
+        }
+
+        private async Task SubmitCode(IKeyboardInput keyboard, InputKey[] submitInputs)
+        {
+            foreach (InputKey key in submitInputs)
+            {
+                await PressKey(keyboard, key);
+            }
         }
 
         private Task Delay(int milliseconds) => _delay(TimeSpan.FromMilliseconds(milliseconds));

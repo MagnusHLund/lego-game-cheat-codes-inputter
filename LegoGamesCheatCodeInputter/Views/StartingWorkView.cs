@@ -31,7 +31,10 @@ namespace LegoGamesCheatCodeInputter.Views
             Console.WriteLine();
             Console.WriteLine("  Before we begin:");
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("  • Open the game's Enter Code screen.");
+            Console.WriteLine(
+                "  • Open the game's Enter Code screen, with the first character selected."
+            );
+            Console.WriteLine("  • Ensure the keyboard can be used for the cheat code input.");
             Console.WriteLine("  • Make sure the game window is focused.");
             Console.WriteLine("  • Keep your hands off the keyboard while codes are entered.");
             Console.ResetColor();

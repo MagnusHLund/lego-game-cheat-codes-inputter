@@ -1,12 +1,15 @@
+using LegoGamesCheatCodeInputter.Controllers.Interfaces;
 using LegoGamesCheatCodeInputter.Models.Games.Interfaces;
 
 namespace LegoGamesCheatCodeInputter.Models.Games
 {
-    public sealed class LegoIndianaJonesTheOriginalAdventures : IGame
+    public sealed class LegoIndianaJonesTheOriginalAdventures : AbstractGame
     {
-        public string Title { get; } = "Lego Indiana Jones: The Original Adventures";
+        public override string Title { get; } = "Lego Indiana Jones: The Original Adventures";
 
-        public IReadOnlyList<CheatCode> Codes { get; } =
+        public override InputKey[] DefaultSubmitInputs { get; } = { InputKey.U, InputKey.NumPad5 };
+
+        public override IReadOnlyList<CheatCode> Codes { get; } =
             new List<CheatCode>
             {
                 new CheatCode { Code = "VIKED7", Description = "Artifact Detector" },
